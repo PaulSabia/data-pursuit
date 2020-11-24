@@ -48,3 +48,6 @@ class Connexion:
         cls.ouvrir_connexion()
         cls.cursor.execute("TRUNCATE TABLE joueurs")
         cls.fermer_connexion()
+
+
+# Test git !!
