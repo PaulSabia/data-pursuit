@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8081
--- Generation Time: Nov 23, 2020 at 03:03 PM
+-- Generation Time: Nov 24, 2020 at 11:15 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -33,7 +33,8 @@ USE `trivial`;
 CREATE TABLE `joueurs` (
   `id_joueur` int(2) NOT NULL,
   `nom_joueur` varchar(50) NOT NULL,
-  `points_joueur` int(10) NOT NULL
+  `points_joueur` int(10) NOT NULL,
+  `couleur_joueur` char(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -44,22 +45,45 @@ CREATE TABLE `joueurs` (
 
 CREATE TABLE `questions` (
   `id_question` int(3) NOT NULL,
-  `nom_question` varchar(100) NOT NULL,
+  `libelle_question` varchar(100) NOT NULL,
   `theme_question` int(1) NOT NULL,
   `difficulte_question` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `questions`
+--
+
+INSERT INTO `questions` (`id_question`, `libelle_question`, `theme_question`, `difficulte_question`) VALUES
+(1, 'Où va aller Paul?', 3, 1),
+(2, 'Le prof s\'appelle Stéphane?', 3, 1),
+(3, 'Comment s\'appelle le dieu de la classe?', 3, 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `question_reponse`
+-- Table structure for table `reponses`
 --
 
-CREATE TABLE `question_reponse` (
+CREATE TABLE `reponses` (
+  `id_reponse` int(9) NOT NULL,
   `id_question` int(1) NOT NULL,
-  `nom_reponse` varchar(100) NOT NULL,
+  `libelle_reponse` varchar(100) NOT NULL,
   `valeur_reponse` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reponses`
+--
+
+INSERT INTO `reponses` (`id_reponse`, `id_question`, `libelle_reponse`, `valeur_reponse`) VALUES
+(1, 2, 'Vrai', 1),
+(2, 2, 'Faux', 0),
+(3, 1, 'Verlingue', 0),
+(4, 1, 'Brest Metropole', 0),
+(5, 1, 'Eureden', 0),
+(6, 1, 'Crédit Agricole', 1),
+(7, 3, 'Paul', 1);
 
 -- --------------------------------------------------------
 
@@ -78,15 +102,21 @@ CREATE TABLE `theme` (
 --
 
 INSERT INTO `theme` (`id_theme`, `nom_theme`, `couleur_theme`) VALUES
-(1, 'Big Data', ''),
-(2, 'IA', ''),
-(3, 'Ethique', ''),
-(4, 'Python', ''),
-(5, 'Mathématique', '');
+(1, 'Big Data', '#F44336'),
+(2, 'IA', '#03A9F4'),
+(3, 'Ethique', '#4CAF50'),
+(4, 'Python', '#FFEB3B'),
+(5, 'Mathématique', '#EC407A');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `joueurs`
+--
+ALTER TABLE `joueurs`
+  ADD PRIMARY KEY (`id_joueur`);
 
 --
 -- Indexes for table `questions`
@@ -96,9 +126,10 @@ ALTER TABLE `questions`
   ADD KEY `theme_question` (`theme_question`);
 
 --
--- Indexes for table `question_reponse`
+-- Indexes for table `reponses`
 --
-ALTER TABLE `question_reponse`
+ALTER TABLE `reponses`
+  ADD PRIMARY KEY (`id_reponse`),
   ADD KEY `id_question` (`id_question`);
 
 --
@@ -112,10 +143,22 @@ ALTER TABLE `theme`
 --
 
 --
+-- AUTO_INCREMENT for table `joueurs`
+--
+ALTER TABLE `joueurs`
+  MODIFY `id_joueur` int(2) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id_question` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_question` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `reponses`
+--
+ALTER TABLE `reponses`
+  MODIFY `id_reponse` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `theme`
@@ -134,10 +177,10 @@ ALTER TABLE `questions`
   ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`theme_question`) REFERENCES `theme` (`id_theme`);
 
 --
--- Constraints for table `question_reponse`
+-- Constraints for table `reponses`
 --
-ALTER TABLE `question_reponse`
-  ADD CONSTRAINT `question_reponse_ibfk_1` FOREIGN KEY (`id_question`) REFERENCES `questions` (`id_question`);
+ALTER TABLE `reponses`
+  ADD CONSTRAINT `reponses_ibfk_1` FOREIGN KEY (`id_question`) REFERENCES `questions` (`id_question`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
