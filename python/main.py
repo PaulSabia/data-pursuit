@@ -20,6 +20,6 @@ def tirer_question(theme, difficulte):
             break
 
 
-tirer_question('Ethique', 2)
+tirer_question('Ethique', 1)
 
 window.mainloop()

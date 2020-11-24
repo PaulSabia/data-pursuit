@@ -23,10 +23,10 @@ class Connexion:
         questions = []
         for i in ids:
             cls.cursor.execute(
-                f"SELECT nom_question, difficulte_question, nom_theme FROM questions JOIN theme on questions.theme_question = theme.id_theme WHERE id_question = {i}")
+                f"SELECT libelle_question, difficulte_question, nom_theme FROM questions JOIN theme on questions.theme_question = theme.id_theme WHERE id_question = {i}")
             question = cls.cursor.fetchone()
             cls.cursor.execute(
-                f"SELECT nom_reponse, valeur_reponse FROM reponses WHERE id_question = {i}")
+                f"SELECT libelle_reponse, valeur_reponse FROM reponses WHERE id_question = {i}")
             reponses = cls.cursor.fetchall()
 
             objet = Question(question[0], reponses, question[1], question[2])
