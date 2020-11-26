@@ -1,3 +1,5 @@
+import random
+
 class Joueur:
     def __init__(self, nom, couleur):
         self.nom = nom
@@ -9,3 +11,7 @@ class Joueur:
 
     def retirer_points(self, points):
         self.points -= points
+
+    def jeter_des(self):
+        des = random.randint(1,6)
+        return des
