@@ -40,7 +40,6 @@ class Interface:
         self.bouton_commencer.pack_forget()
         self.liste_couleur = ['red', 'blue', 'yellow', 'green']
         self.liste_joueur = []
-        self.liste_bouton = []
         self.liste_entry = []
         self.liste_combobox = []
         nbr_joueur = int(self.entry_nbr_joueur.get())
@@ -51,13 +50,11 @@ class Interface:
             self.entry_joueur.pack()
             self.liste_entry.append(self.entry_joueur)
             postcommande = partial(self.update_couleur, w)
-            self.menu_couleur = ttk.Combobox(self.frame_joueurs, values=self.liste_couleur, postcommand=postcommande, state="readonly") 
+            self.menu_couleur = ttk.Combobox(self.frame_joueurs, values=self.liste_couleur, postcommand=postcommande, state="readonly")
+            commande = partial(self.confirmer, w)
+            self.menu_couleur.bind('<<ComboboxSelected>>', commande) 
             self.menu_couleur.pack()
             self.liste_combobox.append(self.menu_couleur)
-            commande = partial(self.confirmer, w)
-            self.bouton_confirmation = tk.Button(self.frame_joueurs, text='Selectionner', command=commande)
-            self.bouton_confirmation.pack()
-            self.liste_bouton.append(self.bouton_confirmation)
 
         bouton_joueur = tk.Button(self.frame_joueurs, text='Jouer', command=self.fin_entree_joueur)
         bouton_joueur.pack()         
@@ -66,19 +63,20 @@ class Interface:
         combobox = self.liste_combobox[w]
         combobox.configure(values=self.liste_couleur)
 
-    def confirmer(self, w):
-        try:
+    def confirmer(self, w, *args):
+        combobox = self.liste_combobox[w]
+        couleur_joueur = combobox.get()
+        self.liste_couleur.remove(couleur_joueur)
+
+
+    def fin_entree_joueur(self):
+        for w in range(len(self.liste_entry)):
             entry = self.liste_entry[w]
             nom_joueur = entry.get()
             combobox = self.liste_combobox[w]
             couleur_joueur = combobox.get()
-            self.liste_couleur.remove(couleur_joueur)
             objet = Joueur(nom_joueur, couleur_joueur)
             self.liste_joueur.append(objet)
-        except:
-            print('Joueur déjà sélectionné !')
-
-    def fin_entree_joueur(self):
         print(self.liste_joueur)
         self.frame_joueurs.destroy()
         
