@@ -14,50 +14,51 @@ class Interface:
         self.master.configure(bg='Gray')
 
         label = tk.Label(self.master, font=('Helvetica', '50'),
-                         fg='Blue', bg='Gray', text="Trivial Data")
+                         fg='Black', bg='Gray', text="Trivial Data")
         label.pack(fill='x', side='top')
 
-        self.frame_joueurs = tk.Frame(self.master)
-        self.frame_joueurs.pack()
+        self.frame_joueurs = tk.Frame(self.master, bg='Gray')
+        self.frame_joueurs.pack(pady=75)
 
         self.frame_question = tk.Frame(self.master, bg='Gray')
-        self.frame_question.pack(pady=25)
+        self.frame_question.pack()
 
-        self.joueurs()
+        self.nombre_joueurs()
 
-    def joueurs(self):
-        self.label_nombre_joueur = tk.Label(self.frame_joueurs, text="Entrez le nombre de joueurs")
-        self.label_nombre_joueur.pack()
-        self.entry_nbr_joueur = tk.Entry(self.frame_joueurs)
-        self.entry_nbr_joueur.pack()
-        self.bouton_commencer = tk.Button(self.frame_joueurs, text="Commencer", command=self.entree_joueur)
-        self.bouton_commencer.pack()
-
-    def entree_joueur(self):
+    def nombre_joueurs(self):
+        self.label_nombre_joueur = tk.Label(self.frame_joueurs, text="Entrez le nombre de joueurs", font=('Helvetica', '20'), bg='Gray')
+        self.label_nombre_joueur.grid(row=0, columnspan=4, padx=10, ipady=50)
         
-        self.label_nombre_joueur.pack_forget()
-        self.entry_nbr_joueur.pack_forget()
-        self.bouton_commencer.pack_forget()
+        for i in range(1, 5):
+            self.entry_nbr_joueur = tk.Button(self.frame_joueurs, height=2, width=13, bg='White', bd=0, font=('Helvetica', '11'), text=i, command=lambda i=i: self.saisir_joueurs(i))
+            self.entry_nbr_joueur.grid(row=1, column=i-1, padx=10, ipadx=10)
+
+
+
+    def saisir_joueurs(self, nombre):
+        for widget in self.frame_joueurs.winfo_children():
+            widget.grid_forget()
+
         self.liste_couleur = ['red', 'blue', 'yellow', 'green']
         self.liste_joueur = []
         self.liste_entry = []
         self.liste_combobox = []
-        nbr_joueur = int(self.entry_nbr_joueur.get())
-        for w in range(nbr_joueur):
-            label_joueur = tk.Label(self.frame_joueurs, text=f"Joueur {w+1}")
-            label_joueur.pack()
-            self.entry_joueur = tk.Entry(self.frame_joueurs)
-            self.entry_joueur.pack()
+        for w in range(nombre):
+            label_joueur = tk.Label(self.frame_joueurs, text=f"Joueur {w+1}", bg='Gray')
+            label_joueur.grid(row=0, column=w, padx=10)
+            self.entry_joueur = tk.Entry(self.frame_joueurs, width=28)
+            self.entry_joueur.grid(row=1, column=w, padx=10)
             self.liste_entry.append(self.entry_joueur)
             postcommande = partial(self.update_couleur, w)
-            self.menu_couleur = ttk.Combobox(self.frame_joueurs, values=self.liste_couleur, postcommand=postcommande, state="readonly")
+            self.menu_couleur = ttk.Combobox(self.frame_joueurs, values=self.liste_couleur, postcommand=postcommande, width=25, state="readonly")
             commande = partial(self.confirmer, w)
+            self.menu_couleur.set('Choisir une couleur')
             self.menu_couleur.bind('<<ComboboxSelected>>', commande) 
-            self.menu_couleur.pack()
+            self.menu_couleur.grid(row=2, column=w, padx=10)
             self.liste_combobox.append(self.menu_couleur)
 
-        bouton_joueur = tk.Button(self.frame_joueurs, text='Jouer', command=self.fin_entree_joueur)
-        bouton_joueur.pack()         
+        bouton_joueur = tk.Button(self.frame_joueurs, text='Jouer', height=2, width=25, bg='White', bd=0, font=('Helvetica', '11'), command=self.fin_entree_joueur)
+        bouton_joueur.grid(row=3, columnspan=nombre, pady=(150, 0))         
 
     def update_couleur(self, w):
         combobox = self.liste_combobox[w]
