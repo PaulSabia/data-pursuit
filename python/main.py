@@ -21,4 +21,5 @@ def tirer_question(theme, difficulte):
 
 tirer_question('Ethique', 1)
 
+
 window.mainloop()
