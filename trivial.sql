@@ -33,8 +33,9 @@ USE `trivial`;
 CREATE TABLE `joueurs` (
   `id_joueur` int(2) NOT NULL,
   `nom_joueur` varchar(50) NOT NULL,
-  `points_joueur` int(10) NOT NULL,
-  `couleur_joueur` char(7) NOT NULL
+  `points_joueur` INT(10) UNSIGNED NOT NULL,
+  `couleur_joueur` char(7) NOT NULL,
+  `record_joueur` INT(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
