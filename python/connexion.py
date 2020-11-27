@@ -42,6 +42,7 @@ class Connexion:
                 f"INSERT INTO joueurs VALUES (NULL, '{joueur.nom}', {joueur.points}, '{joueur.couleur}')")
             cls.link.commit()
         cls.fermer_connexion()
+        print('Réussi')
 
     @classmethod
     def effacer_score(cls):

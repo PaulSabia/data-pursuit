@@ -5,6 +5,7 @@ class Joueur:
         self.nom = nom
         self.points = 0
         self.couleur = couleur
+        print(self.nom)
 
     def ajouter_points(self, points):
         self.points += points
@@ -15,3 +16,6 @@ class Joueur:
     def jeter_des(self):
         des = random.randint(1,6)
         return des
+
+    def victoire(self):
+            return 'Victoire !'

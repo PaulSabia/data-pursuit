@@ -19,7 +19,6 @@ def tirer_question(theme, difficulte):
             plateau.afficher_question(question)
             break
 
-
 tirer_question('Ethique', 1)
 
 window.mainloop()
