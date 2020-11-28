@@ -1,11 +1,13 @@
 import random
 
 class Joueur:
+    liste_joueurs = []
+
     def __init__(self, nom, couleur):
         self.nom = nom
         self.points = 0
         self.couleur = couleur
-        print(self.nom)
+        self.liste_joueurs.append(self)
 
     def ajouter_points(self, points):
         self.points += points

@@ -2,24 +2,32 @@ from connexion import Connexion
 from joueur import Joueur
 from question import Question
 from interface import Interface
+from gameplay import Gameplay
 import tkinter as tk
 import random
 
-questions = Connexion.get_questions()
-random.shuffle(questions)
+def main():
+    # On récupère les questions dans la BDD
+    questions = Connexion.get_questions()
+    # On mélange les questions
+    random.shuffle(questions)
 
-window = tk.Tk()
-plateau = Interface(window)
+    #On créer la fenêtre de jeu
+    window = tk.Tk()
+    #On charge notre interface dans la fenêtre
+    plateau = Interface(window)
 
+    #On initialise notre gameplay
+    jeu = Gameplay()
 
-# def tirer_question(theme, difficulte):
-#     for question in questions:
-#         if question.theme == theme and question.difficulte == difficulte:
-#             questions.remove(question)
-#             plateau.afficher_question(question)
-#             break
+    #On lance le jeu
+    while jeu.fin_jeu == False:
+        question = jeu.tirer_question(questions, 'Ethique', 1)
+        plateau.afficher_question(question)
+        jeu.fin_jeu = True
 
-# tirer_question('Ethique', 1)
+    window.mainloop()
+    liste_joueurs = Joueur.liste_joueurs
+    print(liste_joueurs)
 
-
-window.mainloop()
+main()
