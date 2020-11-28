@@ -78,7 +78,6 @@ class Interface:
             couleur_joueur = combobox.get()
             objet = Joueur(nom_joueur, couleur_joueur)
             self.liste_joueur.append(objet)
-        print(self.liste_joueur)
         self.frame_joueurs.destroy()
         
 
