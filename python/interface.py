@@ -23,7 +23,7 @@ class Interface:
         self.frame_question = tk.Frame(self.master, bg='Gray')
         self.frame_question.pack()
 
-        self.nombre_joueurs()
+        #self.nombre_joueurs()
 
     def nombre_joueurs(self):
         self.label_nombre_joueur = tk.Label(self.frame_joueurs, text="Entrez le nombre de joueurs", font=('Helvetica', '20'), bg='Gray')
