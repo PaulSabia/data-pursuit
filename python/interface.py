@@ -5,25 +5,25 @@ from joueur import Joueur
 from connexion import Connexion
 
 
-class Interface:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("Trivial Data")
-        self.master.geometry('900x600')
-        self.master.minsize(900, 600)
-        self.master.configure(bg='Gray')
+class Interface(tk.Tk):
+    def __init__(self):
+        tk.Tk.__init__(self)
+        self.title("Trivial Data")
+        self.geometry('900x600')
+        self.minsize(900, 600)
+        self.configure(bg='Gray')
 
-        label = tk.Label(self.master, font=('Helvetica', '50'),
+        label = tk.Label(self, font=('Helvetica', '50'),
                          fg='Black', bg='Gray', text="Trivial Data")
         label.pack(fill='x', side='top')
 
-        self.frame_joueurs = tk.Frame(self.master, bg='Gray')
+        self.frame_joueurs = tk.Frame(self, bg='Gray')
         self.frame_joueurs.pack(pady=75)
 
-        self.frame_question = tk.Frame(self.master, bg='Gray')
+        self.frame_question = tk.Frame(self, bg='Gray')
         self.frame_question.pack()
 
-        #self.nombre_joueurs()
+        self.choix_reponse = None
 
     def nombre_joueurs(self):
         self.label_nombre_joueur = tk.Label(self.frame_joueurs, text="Entrez le nombre de joueurs", font=('Helvetica', '20'), bg='Gray')
@@ -78,10 +78,15 @@ class Interface:
             couleur_joueur = combobox.get()
             objet = Joueur(nom_joueur, couleur_joueur)
             self.liste_joueur.append(objet)
-        self.frame_joueurs.destroy()
+        self.destroy()
         
 
     def afficher_question(self, question):
+        # if len(self.frame_question.winfo_children()) > 0:
+        #     for widget in self.frame_question.winfo_children():
+        #         widget.grid_forget()
+        
+        print(question)
         libelle = question.libelle
         self.label_question = tk.Label(
             self.frame_question, text=libelle, bg='Gray', bd=0, font=('Helvetica', '20'))
@@ -105,19 +110,23 @@ class Interface:
     def check_reponse(self, choix):
         if choix == 1:
             print("Bonne réponse")
+            self.choix_reponse = True
             self.frame_question.configure(bg="Green")
             self.label_question.configure(bg="Green")
         else:
             print("Raté, la réponse est fausse")
+            self.choix_reponse = False
             self.frame_question.configure(bg="Red")
             self.label_question.configure(bg="Red")
 
     def check_reponse_string(self, saisie, reponse):
         if saisie == reponse:
             print("Bonne réponse")
+            self.choix_reponse = True
             self.frame_question.configure(bg="Green")
             self.label_question.configure(bg="Green")
         else:
             print("Raté, la réponse est fausse")
+            self.choix_reponse = False
             self.frame_question.configure(bg="Red")
             self.label_question.configure(bg="Red")

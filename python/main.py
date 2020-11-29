@@ -7,33 +7,18 @@ import tkinter as tk
 import random
 
 def main():
-    # On récupère les questions dans la BDD
-    questions = Connexion.get_questions()
-    # On mélange les questions
-    random.shuffle(questions)
-
     #On créer la fenêtre de jeu
-    window_1 = tk.Tk()
-   
-    #On charge notre interface dans la fenêtre
-    fenetre_joueur = Interface(window_1)
+    fenetre_joueur = Interface()
     fenetre_joueur.nombre_joueurs()
-    window_1.mainloop()
+    fenetre_joueur.mainloop()
+
     liste_joueurs = Joueur.liste_joueurs
-    print(liste_joueurs)
 
+    fenetre_jeu = Interface()
 
-    #On initialise notre gameplay
-    jeu = Gameplay()
-    window_2 = tk.Tk()
-    fenetre_jeu = Interface(window_2)
+    Gameplay(fenetre_jeu, liste_joueurs)
 
-    #On lance le jeu
-    while jeu.fin_jeu == False:
-        question = jeu.tirer_question(questions, 'Ethique', 1)
-        fenetre_jeu.afficher_question(question)
-        jeu.fin_jeu = True
-
-    window_2.mainloop()
+    fenetre_jeu.mainloop()
 
 main()
+
