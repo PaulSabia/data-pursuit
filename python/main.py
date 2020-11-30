@@ -7,18 +7,19 @@ import tkinter as tk
 import random
 
 def main():
-    #On créer la fenêtre de jeu
     fenetre_joueur = Interface()
     fenetre_joueur.nombre_joueurs()
     fenetre_joueur.mainloop()
 
     liste_joueurs = Joueur.liste_joueurs
+    trivial = Gameplay()
 
-    fenetre_jeu = Interface()
-
-    Gameplay(fenetre_jeu, liste_joueurs)
-
-    fenetre_jeu.mainloop()
+    for joueur in liste_joueurs:
+        print(joueur.nom)
+        question = trivial.tirer_question('Ethique', 1)
+        fenetre_jeu = Interface()
+        fenetre_jeu.afficher_question(question)
+        fenetre_jeu.mainloop()
 
 main()
 

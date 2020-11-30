@@ -3,6 +3,7 @@ from tkinter import ttk
 from functools import partial
 from joueur import Joueur
 from connexion import Connexion
+from gameplay import Gameplay
 
 
 class Interface(tk.Tk):
@@ -85,8 +86,7 @@ class Interface(tk.Tk):
         # if len(self.frame_question.winfo_children()) > 0:
         #     for widget in self.frame_question.winfo_children():
         #         widget.grid_forget()
-        
-        print(question)
+
         libelle = question.libelle
         self.label_question = tk.Label(
             self.frame_question, text=libelle, bg='Gray', bd=0, font=('Helvetica', '20'))
@@ -130,3 +130,8 @@ class Interface(tk.Tk):
             self.choix_reponse = False
             self.frame_question.configure(bg="Red")
             self.label_question.configure(bg="Red")
+
+
+
+
+
