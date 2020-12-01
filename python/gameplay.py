@@ -31,7 +31,7 @@ class Gameplay:
                         print("La difficulté est de", difficulte)
                         question = self.tirer_question(theme, difficulte)
                         fenetre_jeu = Interface()
-                        fenetre_jeu.afficher_question(self, question, joueur)
+                        fenetre_jeu.afficher_question(self, question, joueur, self.joueurs)
                         fenetre_jeu.mainloop()
                         if fenetre_jeu.choix_reponse == True:
                             joueur.ajouter_points(theme)

@@ -77,7 +77,8 @@ class Interface(tk.Tk):
             self.liste_joueur.append(objet)
         self.destroy()
 
-    def afficher_question(self, gameplay, question, joueur):
+
+    def afficher_question(self, gameplay, question, joueur, liste_joueurs):
         self.info_question = tk.Frame(self, bg='Gray')
         self.info_question.pack(pady=50)
         
@@ -87,6 +88,17 @@ class Interface(tk.Tk):
         self.theme_question.grid(row=0, column=1, padx=50)
         self.difficulte_question = tk.Label(self.info_question, text="Difficulté: " + str(question.difficulte), bg='Gray', bd=0, font=('Helvetica', '12'))
         self.difficulte_question.grid(row=1, column=1, padx=50)
+
+
+        self.frame_question = tk.Frame(self, bg='Gray')
+        self.frame_question.pack()
+
+        self.label_question = tk.Label(self.frame_question, text=question.libelle, bg='Gray', bd=0, font=('Helvetica', '15'))
+        self.label_question.grid(row=0, columnspan=4, padx=10, ipady=50)
+
+        self.frame_score = tk.Frame(self, bg='Gray')
+        self.frame_score.pack(side='left')
+
 
         self.frame_question = tk.Frame(self, bg='Gray')
         self.frame_question.pack()
@@ -111,6 +123,17 @@ class Interface(tk.Tk):
             boutton_quitter = tk.Button(self.frame_question, height=2, width=13, bg='Red', bd=0, font=('Helvetica', '11'), text='Quitter', command=lambda: self.quitter_jeu(gameplay))
             boutton_quitter.grid(row=3, columnspan=4, padx=10, ipadx=10)
 
+        joueurs = liste_joueurs
+        label_frame_score = tk.Label(self.frame_score, text='SCORE')
+        label_frame_score.grid(row=0)
+        for i, joueur in enumerate(joueurs, 1):
+            label_joueur_score = tk.Label(self.frame_score, text=joueur.nom, bg=f"{joueur.couleur}")
+            label_joueur_score.grid(row=1+i, column=0, ipadx=50, ipady=15)
+            label_score = tk.Label(self.frame_score, text=len(joueur.points), bg=f"{joueur.couleur}")
+            label_score.grid(row=1+i, column=1, ipadx=50, ipady=15)
+
+
+
     def check_reponse(self, choix):
         if choix == 1:
             print("Bonne réponse")
@@ -134,6 +157,4 @@ class Interface(tk.Tk):
     def quitter_jeu(self, gameplay):
         gameplay.fin_jeu = True
         self.destroy()
-
-
 
