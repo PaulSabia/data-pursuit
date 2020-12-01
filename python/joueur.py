@@ -12,5 +12,4 @@ class Joueur:
 
     def ajouter_points(self, theme):
         self.points.add(theme)
-
     

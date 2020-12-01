@@ -1,10 +1,9 @@
 from connexion import Connexion
 from joueur import Joueur
-from question import Question
 from interface import Interface
 from gameplay import Gameplay
 import tkinter as tk
-import random
+
 
 
 def main():
