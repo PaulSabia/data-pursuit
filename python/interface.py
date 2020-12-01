@@ -3,7 +3,6 @@ from tkinter import ttk
 from functools import partial
 from joueur import Joueur
 from connexion import Connexion
-from gameplay import Gameplay
 
 
 class Interface(tk.Tk):
@@ -34,8 +33,6 @@ class Interface(tk.Tk):
             self.entry_nbr_joueur = tk.Button(self.frame_joueurs, height=2, width=13, bg='White', bd=0, font=('Helvetica', '11'), text=i, command=lambda i=i: self.saisir_joueurs(i))
             self.entry_nbr_joueur.grid(row=1, column=i-1, padx=10, ipadx=10)
 
-
-
     def saisir_joueurs(self, nombre):
         for widget in self.frame_joueurs.winfo_children():
             widget.grid_forget()
@@ -44,15 +41,19 @@ class Interface(tk.Tk):
         self.liste_joueur = []
         self.liste_entry = []
         self.liste_combobox = []
+        
         for w in range(nombre):
             label_joueur = tk.Label(self.frame_joueurs, text=f"Joueur {w+1}", bg='Gray')
             label_joueur.grid(row=0, column=w, padx=10)
+
             self.entry_joueur = tk.Entry(self.frame_joueurs, width=28)
             self.entry_joueur.grid(row=1, column=w, padx=10)
             self.liste_entry.append(self.entry_joueur)
+
             postcommande = partial(self.update_couleur, w)
             self.menu_couleur = ttk.Combobox(self.frame_joueurs, values=self.liste_couleur, postcommand=postcommande, width=25, state="readonly")
             commande = partial(self.confirmer, w)
+
             self.menu_couleur.set('Choisir une couleur')
             self.menu_couleur.bind('<<ComboboxSelected>>', commande) 
             self.menu_couleur.grid(row=2, column=w, padx=10)
@@ -83,53 +84,41 @@ class Interface(tk.Tk):
         
 
     def afficher_question(self, question):
-        # if len(self.frame_question.winfo_children()) > 0:
-        #     for widget in self.frame_question.winfo_children():
-        #         widget.grid_forget()
-
         libelle = question.libelle
-        self.label_question = tk.Label(
-            self.frame_question, text=libelle, bg='Gray', bd=0, font=('Helvetica', '20'))
+        self.label_question = tk.Label(self.frame_question, text=libelle, bg='Gray', bd=0, font=('Helvetica', '20'))
         self.label_question.grid(row=0, columnspan=4, padx=10, ipady=50)
 
         reponses = question.reponses
         if len(reponses) > 1:
             for i in range(len(reponses)):
                 commande = partial(self.check_reponse, reponses[i][1])
-                boutton_reponse = tk.Button(self.frame_question, height=2, width=13, bg='White', bd=0, font=(
-                    'Helvetica', '11'), text=reponses[i][0], command=commande)
+                boutton_reponse = tk.Button(self.frame_question, height=2, width=13, bg='White', bd=0, font=('Helvetica', '11'), text=reponses[i][0], command=commande)
                 boutton_reponse.grid(row=1, column=i, padx=10, ipadx=10)
         else:
-            self.entree_reponse = tk.Entry(
-                self.frame_question, bg='white', width=20, justify='center', font=('Helvetica', '10'))
+            self.entree_reponse = tk.Entry(self.frame_question, bg='white', width=20, justify='center', font=('Helvetica', '10'))
             self.entree_reponse.grid(row=1, columnspan=4, pady=50)
-            boutton_reponse = tk.Button(self.frame_question, height=2, width=13, bg='White', bd=0, font=(
-                'Helvetica', '11'), text='Valider', command=lambda: self.check_reponse_string(self.entree_reponse.get(), reponses[0][0]))
+            boutton_reponse = tk.Button(self.frame_question, height=2, width=13, bg='White', bd=0, font=('Helvetica', '11'), text='Valider', command=lambda: self.check_reponse_string(self.entree_reponse.get(), reponses[0][0]))
             boutton_reponse.grid(row=2, columnspan=4, padx=10, ipadx=10)
 
     def check_reponse(self, choix):
         if choix == 1:
             print("Bonne réponse")
             self.choix_reponse = True
-            self.frame_question.configure(bg="Green")
-            self.label_question.configure(bg="Green")
+            self.destroy()
         else:
             print("Raté, la réponse est fausse")
             self.choix_reponse = False
-            self.frame_question.configure(bg="Red")
-            self.label_question.configure(bg="Red")
+            self.destroy()
 
     def check_reponse_string(self, saisie, reponse):
         if saisie == reponse:
             print("Bonne réponse")
             self.choix_reponse = True
-            self.frame_question.configure(bg="Green")
-            self.label_question.configure(bg="Green")
+            self.destroy()
         else:
             print("Raté, la réponse est fausse")
             self.choix_reponse = False
-            self.frame_question.configure(bg="Red")
-            self.label_question.configure(bg="Red")
+            self.destroy()
 
 
 

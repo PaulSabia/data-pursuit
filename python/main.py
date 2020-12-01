@@ -12,14 +12,7 @@ def main():
     fenetre_joueur.mainloop()
 
     liste_joueurs = Joueur.liste_joueurs
-    trivial = Gameplay()
+    Gameplay(liste_joueurs)
 
-    for joueur in liste_joueurs:
-        print(joueur.nom)
-        question = trivial.tirer_question('Ethique', 1)
-        fenetre_jeu = Interface()
-        fenetre_jeu.afficher_question(question)
-        fenetre_jeu.mainloop()
 
 main()
-
