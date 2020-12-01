@@ -13,20 +13,15 @@ class Interface(tk.Tk):
         self.minsize(900, 600)
         self.configure(bg='Gray')
 
-        label = tk.Label(self, font=('Helvetica', '50'),
-                         fg='Black', bg='Gray', text="Trivial Data")
+        label = tk.Label(self, font=('Helvetica', '50'), fg='Black', bg='Gray', text="Trivial Data")
         label.pack(fill='x', side='top')
-
-        self.frame_joueurs = tk.Frame(self, bg='Gray')
-        self.frame_joueurs.pack(pady=75)
-
-        self.frame_question = tk.Frame(self, bg='Gray')
-        self.frame_question.pack()
 
         self.choix_reponse = None
 
-
     def nombre_joueurs(self):
+        self.frame_joueurs = tk.Frame(self, bg='Gray')
+        self.frame_joueurs.pack()
+        
         self.label_nombre_joueur = tk.Label(self.frame_joueurs, text="Entrez le nombre de joueurs", font=('Helvetica', '20'), bg='Gray')
         self.label_nombre_joueur.grid(row=0, columnspan=4, padx=10, ipady=50)
         
@@ -72,7 +67,6 @@ class Interface(tk.Tk):
         couleur_joueur = combobox.get()
         self.liste_couleur.remove(couleur_joueur)
 
-
     def fin_entree_joueur(self):
         for w in range(len(self.liste_entry)):
             entry = self.liste_entry[w]
@@ -82,12 +76,27 @@ class Interface(tk.Tk):
             objet = Joueur(nom_joueur, couleur_joueur)
             self.liste_joueur.append(objet)
         self.destroy()
-        
 
-    def afficher_question(self, question):
-        libelle = question.libelle
-        self.label_question = tk.Label(self.frame_question, text=libelle, bg='Gray', bd=0, font=('Helvetica', '20'))
+    def afficher_question(self, gameplay, question, joueur, liste_joueurs):
+        self.info_question = tk.Frame(self, bg='Gray')
+        self.info_question.pack(pady=50)
+        
+        self.label_joueur = tk.Label(self.info_question, text="C'est au tour de " + joueur.nom, bg='Gray', bd=0, font=('Helvetica', '20'))
+        self.label_joueur.grid(rowspan=2, column=0)
+        self.theme_question = tk.Label(self.info_question, text="Theme: " + question.theme, bg='Gray', bd=0, font=('Helvetica', '12'))
+        self.theme_question.grid(row=0, column=1, padx=50)
+        self.difficulte_question = tk.Label(self.info_question, text="Difficulté: " + str(question.difficulte), bg='Gray', bd=0, font=('Helvetica', '12'))
+        self.difficulte_question.grid(row=1, column=1, padx=50)
+
+        self.frame_question = tk.Frame(self, bg='Gray')
+        self.frame_question.pack()
+
+        self.label_question = tk.Label(self.frame_question, text=question.libelle, bg='Gray', bd=0, font=('Helvetica', '15'))
         self.label_question.grid(row=0, columnspan=4, padx=10, ipady=50)
+
+        self.frame_score = tk.Frame(self, bg='Gray')
+        self.frame_score.pack(side='left')
+
 
         reponses = question.reponses
         if len(reponses) > 1:
@@ -95,11 +104,24 @@ class Interface(tk.Tk):
                 commande = partial(self.check_reponse, reponses[i][1])
                 boutton_reponse = tk.Button(self.frame_question, height=2, width=13, bg='White', bd=0, font=('Helvetica', '11'), text=reponses[i][0], command=commande)
                 boutton_reponse.grid(row=1, column=i, padx=10, ipadx=10)
+            boutton_quitter = tk.Button(self.frame_question, height=2, width=13, bg='Red', bd=0, font=('Helvetica', '11'), text='Quitter', command=lambda: self.quitter_jeu(gameplay))
+            boutton_quitter.grid(row=2, columnspan=4, padx=10, ipadx=10)
         else:
             self.entree_reponse = tk.Entry(self.frame_question, bg='white', width=20, justify='center', font=('Helvetica', '10'))
             self.entree_reponse.grid(row=1, columnspan=4, pady=50)
             boutton_reponse = tk.Button(self.frame_question, height=2, width=13, bg='White', bd=0, font=('Helvetica', '11'), text='Valider', command=lambda: self.check_reponse_string(self.entree_reponse.get(), reponses[0][0]))
             boutton_reponse.grid(row=2, columnspan=4, padx=10, ipadx=10)
+            boutton_quitter = tk.Button(self.frame_question, height=2, width=13, bg='Red', bd=0, font=('Helvetica', '11'), text='Quitter', command=lambda: self.quitter_jeu(gameplay))
+            boutton_quitter.grid(row=3, columnspan=4, padx=10, ipadx=10)
+
+        joueurs = liste_joueurs
+        label_frame_score = tk.Label(self.frame_score, text='SCORE')
+        label_frame_score.grid(row=0)
+        for i, joueur in enumerate(joueurs, 1):
+            label_joueur_score = tk.Label(self.frame_score, text=joueur.nom, bg=f"{joueur.couleur}")
+            label_joueur_score.grid(row=1+i, column=0, ipadx=50, ipady=15)
+            label_score = tk.Label(self.frame_score, text=len(joueur.points), bg=f"{joueur.couleur}")
+            label_score.grid(row=1+i, column=1, ipadx=50, ipady=15)
 
     def check_reponse(self, choix):
         if choix == 1:
@@ -121,7 +143,16 @@ class Interface(tk.Tk):
             self.choix_reponse = False
             self.destroy()
 
+    def quitter_jeu(self, gameplay):
+        gameplay.fin_jeu = True
+        self.destroy()
 
 
 
-
+        # label_frame_score = tk.Label(self.frame_score, text='SCORE')
+        # label_frame_score.grid(row=0)
+        # for i, joueur in enumerate(joueurs, 1):
+        #     label_joueur = tk.Label(self.frame_score, text=joueur.nom, bg=f"{joueur.couleur}")
+        #     label_joueur.grid(row=1+i, column=0, ipadx=50, ipady=15)
+        #     label_score = tk.Label(self.frame_score, text=joueur.points, bg=f"{joueur.couleur}")
+        #     label_score.grid(row=1+i, column=1, ipadx=50, ipady=15)
