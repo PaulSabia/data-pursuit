@@ -2,7 +2,7 @@ import random
 
 class Joueur:
     liste_joueurs = []
-
+    
     def __init__(self, nom, couleur):
         self.nom = nom
         self.points = 0

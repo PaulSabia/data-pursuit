@@ -26,6 +26,7 @@ class Interface(tk.Tk):
 
         self.choix_reponse = None
 
+
     def nombre_joueurs(self):
         self.label_nombre_joueur = tk.Label(self.frame_joueurs, text="Entrez le nombre de joueurs", font=('Helvetica', '20'), bg='Gray')
         self.label_nombre_joueur.grid(row=0, columnspan=4, padx=10, ipady=50)
