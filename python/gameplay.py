@@ -10,7 +10,7 @@ class Gameplay:
         self.fin_jeu = False
         self.joueurs = joueurs
         # self.themes = Connexion.get_themes()
-        self.themes = ['Ethique']
+        self.themes = ['Ethique', 'IA', 'Python']
         self.questions = Connexion.get_questions()
         self.questions = self.questions * 5
         if len(self.joueurs) > 0:

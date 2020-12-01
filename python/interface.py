@@ -77,6 +77,7 @@ class Interface(tk.Tk):
             self.liste_joueur.append(objet)
         self.destroy()
 
+
     def afficher_question(self, gameplay, question, joueur, liste_joueurs):
         self.info_question = tk.Frame(self, bg='Gray')
         self.info_question.pack(pady=50)
@@ -88,6 +89,7 @@ class Interface(tk.Tk):
         self.difficulte_question = tk.Label(self.info_question, text="Difficulté: " + str(question.difficulte), bg='Gray', bd=0, font=('Helvetica', '12'))
         self.difficulte_question.grid(row=1, column=1, padx=50)
 
+
         self.frame_question = tk.Frame(self, bg='Gray')
         self.frame_question.pack()
 
@@ -96,6 +98,13 @@ class Interface(tk.Tk):
 
         self.frame_score = tk.Frame(self, bg='Gray')
         self.frame_score.pack(side='left')
+
+
+        self.frame_question = tk.Frame(self, bg='Gray')
+        self.frame_question.pack()
+
+        self.label_question = tk.Label(self.frame_question, text=question.libelle, bg='Gray', bd=0, font=('Helvetica', '15'))
+        self.label_question.grid(row=0, columnspan=4, padx=10, ipady=50)
 
 
         reponses = question.reponses
@@ -122,6 +131,8 @@ class Interface(tk.Tk):
             label_joueur_score.grid(row=1+i, column=0, ipadx=50, ipady=15)
             label_score = tk.Label(self.frame_score, text=len(joueur.points), bg=f"{joueur.couleur}")
             label_score.grid(row=1+i, column=1, ipadx=50, ipady=15)
+
+
 
     def check_reponse(self, choix):
         if choix == 1:
