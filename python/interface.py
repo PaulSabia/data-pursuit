@@ -147,12 +147,3 @@ class Interface(tk.Tk):
         gameplay.fin_jeu = True
         self.destroy()
 
-
-
-        # label_frame_score = tk.Label(self.frame_score, text='SCORE')
-        # label_frame_score.grid(row=0)
-        # for i, joueur in enumerate(joueurs, 1):
-        #     label_joueur = tk.Label(self.frame_score, text=joueur.nom, bg=f"{joueur.couleur}")
-        #     label_joueur.grid(row=1+i, column=0, ipadx=50, ipady=15)
-        #     label_score = tk.Label(self.frame_score, text=joueur.points, bg=f"{joueur.couleur}")
-        #     label_score.grid(row=1+i, column=1, ipadx=50, ipady=15)
