@@ -9,6 +9,9 @@ class Joueur:
         self.couleur = couleur
         self.liste_joueurs.append(self)
 
+    def __str__(self):
+        return self.nom
+
     def ajouter_points(self, points):
         self.points += points
 
@@ -21,3 +24,5 @@ class Joueur:
 
     def victoire(self):
             return 'Victoire !'
+
+    
