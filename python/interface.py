@@ -93,15 +93,7 @@ class Interface(tk.Tk):
         self.frame_question = tk.Frame(self, bg='Gray')
         self.frame_question.pack()
 
-        self.label_question = tk.Label(self.frame_question, text=question.libelle, bg='Gray', bd=0, font=('Helvetica', '15'))
-        self.label_question.grid(row=0, columnspan=4, padx=10, ipady=50)
 
-        self.frame_score = tk.Frame(self, bg='Gray')
-        self.frame_score.pack(side='left')
-
-
-        self.frame_question = tk.Frame(self, bg='Gray')
-        self.frame_question.pack()
 
         self.label_question = tk.Label(self.frame_question, text=question.libelle, bg='Gray', bd=0, font=('Helvetica', '15'))
         self.label_question.grid(row=0, columnspan=4, padx=10, ipady=50)
@@ -122,6 +114,9 @@ class Interface(tk.Tk):
             boutton_reponse.grid(row=2, columnspan=4, padx=10, ipadx=10)
             boutton_quitter = tk.Button(self.frame_question, height=2, width=13, bg='Red', bd=0, font=('Helvetica', '11'), text='Quitter', command=lambda: self.quitter_jeu(gameplay))
             boutton_quitter.grid(row=3, columnspan=4, padx=10, ipadx=10)
+
+        self.frame_score = tk.Frame(self, bg='Gray')
+        self.frame_score.pack(side='left')
 
         joueurs = liste_joueurs
         label_frame_score = tk.Label(self.frame_score, text='SCORE')
@@ -153,6 +148,31 @@ class Interface(tk.Tk):
             print("Raté, la réponse est fausse")
             self.choix_reponse = False
             self.destroy()
+
+    def ecran_victoire(self, joueur_victorieux, liste_joueurs):
+        self.frame_victoire = tk.Frame(self, bg='Gray')
+        self.frame_victoire.pack(pady=50)
+
+        self.label_victoire = tk.Label(self.frame_victoire, text=f"{joueur_victorieux.nom} à gagné la partie !!",  bg='Gray', bd=0, font=('Helvetica', '20'))
+        self.label_victoire.pack(pady=30)
+
+        self.label_classement = tk.Label(self.frame_victoire, text='Classement de partie', font=('Helvetica', '20'))
+        self.label_classement.pack(ipadx=50, ipady=10)
+
+        self.frame_classement = tk.Frame(self.frame_victoire)
+        self.frame_classement.pack()
+
+        liste_couleur = ['red', 'blue', 'orange', 'yellow']
+        for i, joueurs in enumerate(liste_joueurs, 1):
+            label_chiffre = tk.Label(self.frame_classement, text=f"{i}.", font=('Helvetica', '12'))
+            label_chiffre.grid(row=i, column=1, ipadx=50, ipady=10)
+            label_joueur = tk.Label(self.frame_classement, text=f'{joueurs}', font=('Helvetica', '10'), fg=joueurs.couleur)
+            label_joueur.grid(row=i, column=2, ipadx=50, ipady=10)
+            frame_point = tk.Frame(self.frame_classement)
+            frame_point.grid(row=i, column=3, ipadx=50, ipady=10)
+            for i in range(len(joueurs.points)):
+                label_score = tk.Label(frame_point, font=('Helvetica', '10'), bg=f'{liste_couleur[i]}')
+                label_score.grid(column=i, ipadx=5)
 
     def quitter_jeu(self, gameplay):
         gameplay.fin_jeu = True
