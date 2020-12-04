@@ -5,7 +5,6 @@ from gameplay import Gameplay
 import tkinter as tk
 
 
-
 def main():
     fenetre_joueur = Interface()
     fenetre_joueur.nombre_joueurs()
