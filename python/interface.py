@@ -9,8 +9,8 @@ class Interface(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.title("Trivial Data")
-        self.geometry('900x600')
-        self.minsize(900, 600)
+        self.geometry('1080x600')
+        self.minsize(1080, 600)
         self.configure(bg='Gray')
 
         label = tk.Label(self, font=('Helvetica', '50'), fg='Black', bg='Gray', text="Trivial Data")
