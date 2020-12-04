@@ -10,7 +10,7 @@ class Gameplay:
         self.fin_jeu = False
         self.joueurs = joueurs
         # self.themes = Connexion.get_themes()
-        self.themes = ['Ethique', 'IA', 'Python']
+        self.themes = ['Ethique']  #'IA', 'Python'
         self.questions = Connexion.get_questions()
         self.questions = self.questions * 5
         if len(self.joueurs) > 0:
@@ -22,8 +22,11 @@ class Gameplay:
             for joueur in self.joueurs:
                 print("A toi:", joueur.nom)
                 while self.fin_jeu == False:
-                    if len(joueur.points) == 5:
+                    if len(joueur.points) == 1:
                         print(joueur.nom, "a gagné")
+                        fenetre_victoire = Interface()
+                        fenetre_victoire.ecran_victoire(joueur, self.joueurs)
+                        fenetre_victoire.mainloop()
                         return
                     else:
                         theme = random.choice(self.themes)
