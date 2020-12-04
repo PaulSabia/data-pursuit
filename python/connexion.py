@@ -22,7 +22,7 @@ class Connexion:
         ids = [item[0] for item in cls.cursor.fetchall()]
         questions = []
         for i in ids:
-            cls.cursor.execute(f"SELECT libelle_question, difficulte_question, nom_theme FROM questions JOIN themes on questions.theme_question = themes.id_theme WHERE id_question = {i}")
+            cls.cursor.execute(f"SELECT libelle_question, difficulte_question, nom_theme FROM questions JOIN theme on questions.theme_question = theme.id_theme WHERE id_question = {i}")
             question = cls.cursor.fetchone()
             cls.cursor.execute(f"SELECT libelle_reponse, valeur_reponse FROM reponses WHERE id_question = {i}")
             reponses = cls.cursor.fetchall()
@@ -35,8 +35,8 @@ class Connexion:
     @classmethod
     def get_themes(cls):
         cls.ouvrir_connexion()
-        cls.cursor.execute("SELECT nom_theme from themes")
-        themes = cls.cursor.fetchall()
+        cls.cursor.execute("SELECT nom_theme from theme")
+        themes = [item[0] for item in cls.cursor.fetchall()]
         liste_themes = []
         for i in themes:
             theme = Theme(i)
