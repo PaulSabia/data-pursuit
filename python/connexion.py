@@ -1,5 +1,5 @@
 import mysql.connector as mysql
-from question import Question
+from question import Question, Theme
 
 
 class Connexion:
@@ -22,7 +22,7 @@ class Connexion:
         ids = [item[0] for item in cls.cursor.fetchall()]
         questions = []
         for i in ids:
-            cls.cursor.execute(f"SELECT libelle_question, difficulte_question, nom_theme FROM questions JOIN theme on questions.theme_question = theme.id_theme WHERE id_question = {i}")
+            cls.cursor.execute(f"SELECT libelle_question, difficulte_question, nom_theme FROM questions JOIN themes on questions.theme_question = themes.id_theme WHERE id_question = {i}")
             question = cls.cursor.fetchone()
             cls.cursor.execute(f"SELECT libelle_reponse, valeur_reponse FROM reponses WHERE id_question = {i}")
             reponses = cls.cursor.fetchall()
@@ -37,20 +37,9 @@ class Connexion:
         cls.ouvrir_connexion()
         cls.cursor.execute("SELECT nom_theme from themes")
         themes = cls.cursor.fetchall()
+        liste_themes = []
+        for i in themes:
+            theme = Theme(i)
+            liste_themes.append(theme)
         cls.fermer_connexion()
-        return themes
-
-    @classmethod
-    def sauvegarder_score(cls, joueurs):
-        cls.ouvrir_connexion()
-        for joueur in joueurs:
-            cls.cursor.execute(f"INSERT INTO joueurs VALUES (NULL, '{joueur.nom}', {joueur.points}, '{joueur.couleur}')")
-            cls.link.commit()
-        cls.fermer_connexion()
-        print('Réussi')
-
-    @classmethod
-    def effacer_score(cls):
-        cls.ouvrir_connexion()
-        cls.cursor.execute("TRUNCATE TABLE joueurs")
-        cls.fermer_connexion()
+        return liste_themes
